@@ -7,25 +7,32 @@ on:
       - dev
   workflow_dispatch:
 
+# Add top-level permissions
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: write
 
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
       - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
-        run: |
-          docker build . -t ghcr.io/campus-molndal-cloh24/cloud-applications-advanced:${{ github.ref_name }}
-          docker push ghcr.io/campus-molndal-cloh24/cloud-applications-advanced:${{ github.ref_name }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/campus-molndal-cloh24/cloud-applications-advanced:${{ github.ref_name }}
 
   deploy_to_azure_container_apps:
     needs: build_and_push
