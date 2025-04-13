@@ -40,5 +40,7 @@ jobs:
           if az containerapp show --name cloudapplicationadvanced --resource-group DockerDemoRG &>/dev/null; then
             echo "✅ Container App exists and is ready for deployment."
           else
-            echo "⚠️ Container App does not exist. It will need to be created for production."
+            echo "❌ ERROR: Container App does not exist. The deployment will fail."
+            echo "Please provision the Container App manually using your provisioning scripts."
+            exit 1
           fi
