@@ -44,6 +44,6 @@ jobs:
       - name: Deploy to Azure Container Apps
         run: |
           az containerapp update \
-            --name cloudapplicationadvanced-${{ github.ref_name }} \
+            --name cloudapplicationadvanced \
             --resource-group DockerDemoRG \
             --image ${{ secrets.DOCKERHUB_USERNAME }}/cloud-applications-advanced:${{ github.ref_name }}
