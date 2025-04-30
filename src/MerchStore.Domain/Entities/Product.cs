@@ -5,14 +5,12 @@ namespace MerchStore.Domain.Entities;
 
 public class Product : Entity<Guid>
 {
-    // Properties with private setters for encapsulation
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public Money Price { get; private set; } = Money.FromSEK(0);
     public int StockQuantity { get; private set; } = 0;
     public Uri? ImageUrl { get; private set; } = null;
 
-    // Private parameterless constructor for EF Core
     private Product()
     {
         // Required for EF Core, but we don't want it to be used directly

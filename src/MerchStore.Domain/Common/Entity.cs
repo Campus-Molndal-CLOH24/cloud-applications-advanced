@@ -2,11 +2,10 @@ namespace MerchStore.Domain.Common;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>> where TId : notnull
 {
-    public TId Id { get; protected set; } // EF Core requires a setter for the ID property
+    public TId Id { get; protected set; }
 
     protected Entity(TId id)
     {
-        // Basic validation, can be expanded
         if (EqualityComparer<TId>.Default.Equals(id, default))
         {
             throw new ArgumentException("The entity ID cannot be the default value.", nameof(id));
