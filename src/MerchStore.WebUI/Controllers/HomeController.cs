@@ -1,12 +1,19 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MerchStore.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MerchStore.WebUI.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+
+    [Authorize] // This attribute ensures that only authenticated users can access this action.
+    public IActionResult WhoAmI()
+    {
+        return View();
+    }
 
     public HomeController(ILogger<HomeController> logger)
     {
